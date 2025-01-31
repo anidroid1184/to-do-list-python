@@ -2,12 +2,13 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Permite solicitudes desde el frontend
+# Permite solicitudes desde el frontend
+CORS(app, resources={r"/api/*": {"origins": "https://anidroid1184-to-do-list.netlify.app"}})
 
 # Base de datos temporal (en memoria)
 todos = [
-    {"id": 1, "task": "Aprender Flask", "completed": False},
-    {"id": 2, "task": "Practicar React", "completed": True}
+    {"id": 1, "task": "Aprender mucho", "completed": False},
+    {"id": 2, "task": "Practicar mucho", "completed": True}
 ]
 
 # Obtener todas las tareas

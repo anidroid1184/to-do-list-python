@@ -1,12 +1,54 @@
-# To-Do List App
+"# To-Do List App (Flask + React)
 
-Aplicación de tareas con Flask (backend) y React (frontend).
+Aplicación full-stack para gestión de tareas con persistencia local en SQLite.
 
-## Demo en vivo
-- Frontend: https://mi-todo-list.netlify.app
-- API: https://mi-todo-list.herokuapp.com
+## Stack Tecnológico
+- **Backend**: Python 3.10, Flask, Flask-CORS, SQLite
+- **Frontend**: React 18, Axios, CSS Modules
 
-## Instalación local
-1. Clona el repositorio:
+## Requisitos Previos
+- Python 3.10+
+- Node.js 18+
+- pip y npm instalados
+
+## Estructura del Proyecto
+to-do-list/
+├── backend/
+│ ├── app.py # Servidor Flask
+│ ├── todos.db # Base de datos
+│ └── requirements.txt # Dependencias Python
+└── frontend/
+├── src/
+│ ├── App.js # Componente principal
+│ └── App.css # Estilos
+└── package.json # Dependencias JavaScript
+
+## Ejecución Local
+### Backend (Flask)
+1. Crear entorno virtual:
    ```bash
-   git clone https://github.com/tu-usuario/todo-list.git
+   cd backend
+   python3 -m venv .venv
+   source .venv/bin/activate  # Unix/macOS
+   ```
+2. Instalar dependencias:
+   ```pip install -r requirements.txt
+   ```
+
+
+3. Iniciar servidor:
+   ````flask run --port 5000
+   ````
+
+
+### Frontend(React)
+
+1. Instalar depedencias:
+   ````
+   cd frontend
+   npm install
+   ````
+2. Iniciar aplicación
+   ````
+   npm start
+   ````
