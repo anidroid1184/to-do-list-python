@@ -1,4 +1,4 @@
-"# To-Do List App (Flask + React)
+# To-Do List App (Flask + React)
 
 Aplicación full-stack para gestión de tareas con persistencia local en SQLite.
 
