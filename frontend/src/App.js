@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -11,65 +12,90 @@ function App() {
   }, []);
 
   const fetchTodos = async () => {
-    const response = await axios.get('http://127.0.0.1:5000/api/todos');
-    setTodos(response.data);
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/api/todos');
+      setTodos(response.data);
+    } catch (error) {
+      console.error('Error fetching todos:', error);
+    }
   };
 
   const addTodo = async (e) => {
     e.preventDefault();
     if (!newTodo.trim()) return;
-    
-    const response = await axios.post('http://localhost:5000/api/todos', {
-      task: newTodo
-    });
-    
-    setTodos([...todos, response.data]);
-    setNewTodo('');
+
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/api/todos', {
+        task: newTodo
+      });
+      setTodos([...todos, response.data]);
+      setNewTodo('');
+    } catch (error) {
+      console.error('Error adding todo:', error);
+    }
   };
 
   const toggleTodo = async (id) => {
-    await axios.put(`http://localhost:5000/api/todos/${id}`);
-    fetchTodos();  // Actualizar lista
+    try {
+      await axios.put(`http://127.0.0.1:5000/api/todos/${id}`);
+      fetchTodos(); // Actualizar lista completa para reflejar cambios
+    } catch (error) {
+      console.error('Error toggling todo:', error);
+    }
   };
 
   const deleteTodo = async (id) => {
-    await axios.delete(`http://localhost:5000/api/todos/${id}`);
-    setTodos(todos.filter(todo => todo.id !== id));
+    try {
+      await axios.delete(`http://127.0.0.1:5000/api/todos/${id}`);
+      setTodos(todos.filter(todo => todo.id !== id));
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+    }
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-      <h1>To-Do List</h1>
-      <form onSubmit={addTodo}>
+    <div className="container">
+      <h1 className="title">✅ To-Do List</h1>
+
+      <form onSubmit={addTodo} className="form">
         <input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          placeholder="Nueva tarea"
+          placeholder="¿Qué necesitas hacer hoy?"
+          className="input"
         />
-        <button type="submit">Agregar</button>
+        <button type="submit" className="add-button">
+          Agregar Tarea
+        </button>
       </form>
 
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul className="todo-list">
         {todos.map(todo => (
-          <li key={todo.id} style={{ margin: '10px 0' }}>
-            <input
-              type="checkbox"
-              checked={todo.completed}
-              onChange={() => toggleTodo(todo.id)}
-            />
-            <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-              {todo.task}
-            </span>
+          <li key={todo.id} className={`todo-item ${todo.completed ? 'completed' : ''}`}>
+            <div className="task-container">
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={() => toggleTodo(todo.id)}
+                className="checkbox"
+              />
+              <span className="task-text">{todo.task}</span>
+            </div>
             <button
               onClick={() => deleteTodo(todo.id)}
-              style={{ marginLeft: '10px', color: 'red' }}
+              className="delete-button"
+              aria-label="Eliminar"
             >
-              Eliminar
+              ✕
             </button>
           </li>
         ))}
       </ul>
+
+      {todos.length === 0 && (
+        <p className="empty-message">¡No hay tareas pendientes! 🎉</p>
+      )}
     </div>
   );
 }
