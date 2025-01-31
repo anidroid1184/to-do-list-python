@@ -32,12 +32,14 @@ to-do-list/
    source .venv/bin/activate  # Unix/macOS
    ```
 2. Instalar dependencias:
-   ```pip install -r requirements.txt
+   ```
+   pip install -r requirements.txt
    ```
 
 
 3. Iniciar servidor:
-   ````flask run --port 5000
+   ````
+   flask run --port 5000
    ````
 
 
